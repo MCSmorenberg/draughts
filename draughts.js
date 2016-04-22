@@ -77,8 +77,50 @@ function initBoard() {
 };
 
 function initPieces() {
-  var white = "#ffffff";
-  var black = "#000000";
+  var white = "#DAA520";
+  var black = "#333333";
+
+  var whitePiece1 = new Piece(37, 487, white);
+  pieces.push(whitePiece1);
+  var whitePiece2 = new Piece(187, 487, white);
+  pieces.push(whitePiece2);
+  var whitePiece3 = new Piece(337, 487, white);
+  pieces.push(whitePiece3);
+  var whitePiece4 = new Piece(487, 487, white);
+  pieces.push(whitePiece4);
+  var whitePiece5 = new Piece(637, 487, white);
+  pieces.push(whitePiece5);
+  var whitePiece6 = new Piece(112, 562, white);
+  pieces.push(whitePiece6);
+  var whitePiece7 = new Piece(262, 562, white);
+  pieces.push(whitePiece7);
+  var whitePiece8 = new Piece(412, 562, white);
+  pieces.push(whitePiece8);
+  var whitePiece9 = new Piece(562, 562, white);
+  pieces.push(whitePiece9);
+  var whitePiece10 = new Piece(712, 562, white);
+  pieces.push(whitePiece10);
+  var whitePiece11 = new Piece(37, 638, white);
+  pieces.push(whitePiece11);
+  var whitePiece12 = new Piece(187, 638, white);
+  pieces.push(whitePiece12);
+  var whitePiece13 = new Piece(337, 638, white);
+  pieces.push(whitePiece13);
+  var whitePiece14 = new Piece(487, 638, white);
+  pieces.push(whitePiece14);
+  var whitePiece15 = new Piece(637, 638, white);
+  pieces.push(whitePiece15);
+  var whitePiece16 = new Piece(112, 712, white);
+  pieces.push(whitePiece16);
+  var whitePiece17 = new Piece(262, 712, white);
+  pieces.push(whitePiece17);
+  var whitePiece18 = new Piece(412, 712, white);
+  pieces.push(whitePiece18);
+  var whitePiece19 = new Piece(562, 712, white);
+  pieces.push(whitePiece19);
+  var whitePiece20 = new Piece(712, 712, white);
+  pieces.push(whitePiece20);
+
 
   var blackPiece1 = new Piece(37, 37, black);
   pieces.push(blackPiece1);
