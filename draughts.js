@@ -77,8 +77,49 @@ function initBoard() {
 };
 
 function initPieces() {
-  var blackPiece1 = new Piece(37, 37, 'black');
+  var white = "#ffffff";
+  var black = "#000000";
+
+  var blackPiece1 = new Piece(37, 37, black);
   pieces.push(blackPiece1);
+  var blackPiece2 = new Piece(187, 37, black);
+  pieces.push(blackPiece2);
+  var blackPiece3 = new Piece(337, 37, black);
+  pieces.push(blackPiece3);
+  var blackPiece4 = new Piece(487, 37, black);
+  pieces.push(blackPiece4);
+  var blackPiece5 = new Piece(637, 37, black);
+  pieces.push(blackPiece5);
+  var blackPiece6 = new Piece(112, 112, black);
+  pieces.push(blackPiece6);
+  var blackPiece7 = new Piece(262, 112, black);
+  pieces.push(blackPiece7);
+  var blackPiece8 = new Piece(412, 112, black);
+  pieces.push(blackPiece8);
+  var blackPiece9 = new Piece(562, 112, black);
+  pieces.push(blackPiece9);
+  var blackPiece10 = new Piece(712, 112, black);
+  pieces.push(blackPiece10);
+  var blackPiece11 = new Piece(37, 187, black);
+  pieces.push(blackPiece11);
+  var blackPiece12 = new Piece(187, 187, black);
+  pieces.push(blackPiece12);
+  var blackPiece13 = new Piece(337, 187, black);
+  pieces.push(blackPiece13);
+  var blackPiece14 = new Piece(487, 187, black);
+  pieces.push(blackPiece14);
+  var blackPiece15 = new Piece(637, 187, black);
+  pieces.push(blackPiece15);
+  var blackPiece16 = new Piece(112, 262, black);
+  pieces.push(blackPiece16);
+  var blackPiece17 = new Piece(262, 262, black);
+  pieces.push(blackPiece17);
+  var blackPiece18 = new Piece(412, 262, black);
+  pieces.push(blackPiece18);
+  var blackPiece19 = new Piece(562, 262, black);
+  pieces.push(blackPiece19);
+  var blackPiece20 = new Piece(712, 262, black);
+  pieces.push(blackPiece20);
 
   // Draw the pieces
   pieces.forEach(function(piece) {
@@ -96,14 +137,14 @@ function drawBoard() {
 };
 
 function drawPiece(piece) {
-
+  //These properties may go in the ctx.arc function
   ctx.beginPath();
   ctx.fillStyle = piece.color;
-  //         x        y    rad sAng   eAng      antiC   line    fill
-  ctx.arc(piece.x, piece.y, 30, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#696969';
+  ctx.lineWidth = 2;
+  //        x        y    rad sAng   eAng
+  ctx.arc(piece.x, piece.y, 33, 0, 2 * Math.PI);
   ctx.fill();
-  //ctx.closePath();
-
-  // ctx.strokeStyle = '#003300';
-
+  ctx.stroke();
+  ctx.closePath();
 }
