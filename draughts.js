@@ -3,12 +3,22 @@ var Draughts = {};
 var canvas;
 var ctx;
 var elements = [];
+var pieces = [];
 
+var Piece = function(x, y, color) {
+  this.x = x;
+  this.y = y;
+  this.width = 75;
+  this.height = 75;
+  this.color = color;
+};
 
 Draughts.initialize = function() {
   initCanvas();
   initBoard();
+  //initPieces();
   drawBoard();
+  initPieces();
 };
 
 Draughts.draw = function() {
@@ -25,6 +35,7 @@ Draughts.initialize();
 function initCanvas() {
   canvas = document.getElementById('board'),
   ctx = canvas.getContext('2d'),
+  //Board boxes
   elements = [];
 };
 
@@ -65,6 +76,16 @@ function initBoard() {
   }
 };
 
+function initPieces() {
+  var blackPiece1 = new Piece(37, 37, 'black');
+  pieces.push(blackPiece1);
+
+  // Draw the pieces
+  pieces.forEach(function(piece) {
+    drawPiece(piece);
+  })
+};
+
 function drawBoard() {
 
     // Render elements.
@@ -73,3 +94,16 @@ function drawBoard() {
       ctx.fillRect(element.left, element.top, element.width, element.height);
   });
 };
+
+function drawPiece(piece) {
+
+  ctx.beginPath();
+  ctx.fillStyle = piece.color;
+  //         x        y    rad sAng   eAng      antiC   line    fill
+  ctx.arc(piece.x, piece.y, 30, 0, 2 * Math.PI);
+  ctx.fill();
+  //ctx.closePath();
+
+  // ctx.strokeStyle = '#003300';
+
+}
