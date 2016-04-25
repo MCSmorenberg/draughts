@@ -5,6 +5,9 @@ var ctx;
 var elements = [];
 var pieces = [];
 
+var selectedPiece;
+
+
 var Piece = function(x, y, color) {
   this.x = x;
   this.y = y;
@@ -13,23 +16,51 @@ var Piece = function(x, y, color) {
   this.color = color;
 };
 
+
+
+/////////////////////////////////////////////////////////////////
+Piece.prototype.update = function() {
+  console.log("Update");
+};
+
+/////////////////////////////////////////////////////////////////
+
 Draughts.initialize = function() {
   initCanvas();
   initBoard();
-  //initPieces();
-  drawBoard();
   initPieces();
+  drawBoard();
+  //initPieces();
 };
 
 Draughts.draw = function() {
+  ctx.clearRect( 0, 0, canvas.width, canvas.height);
+  console.log("draw");
+  drawBoard();
+  ctx.save();
+
+  for (var i=0; i < pieces.length; i++) {
+    drawPiece(pieces[i]);
+  }
+  ctx.restore();
 };
 
 Draughts.update = function() {
+
+  for (var i=0; i < pieces.length; i++) {
+    pieces[i].update();
+  }
 };
 
 Draughts.initialize();
 
-
+var run = function(){
+  Draughts.update();
+  Draughts.draw();
+  console.log("It's working!!");
+  window.requestAnimationFrame(run, canvas);
+};
+window.requestAnimationFrame(run, canvas);
 
 // Game interaction
 function initCanvas() {
@@ -38,6 +69,7 @@ function initCanvas() {
   //Board boxes
   elements = [];
 };
+
 
 function initBoard() {
 
@@ -170,7 +202,6 @@ function initPieces() {
 };
 
 function drawBoard() {
-
     // Render elements.
     elements.forEach(function (element) {
       ctx.fillStyle = element.colour;
