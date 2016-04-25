@@ -4,29 +4,39 @@ var canvas;
 var ctx;
 var elements = [];
 var pieces = [];
-
+var CLICK_EVENT = false;
 var selectedPiece;
 
-
-var Piece = function(x, y, color) {
+var Piece = function(x, y, pieceColor) {
   this.x = x;
   this.y = y;
   this.width = 75;
   this.height = 75;
-  this.color = color;
+  this.color = pieceColor;
+
+  this.moveX = x;
+  this.moveY = y;
+
+  this.clickX = 0;
+  this.clickY = 0;
 };
 
+Piece.prototype.clickWithinPiece = function(x, y) {
+  return (y > this.y - 25 && y < this.y + this.height - 25 && x > this.x + 25 && x < this.x + this.width + 25);
+};
 
-
-/////////////////////////////////////////////////////////////////
 Piece.prototype.update = function() {
-  console.log("Update");
+  this.x = this.moveX;
+  this.y = this.moveY;
+  //console.log("still updating");
 };
 
-/////////////////////////////////////////////////////////////////
 
 Draughts.initialize = function() {
   initCanvas();
+  addEventListenerMousedown(eventListenerMousedown);
+  addEventListenerMouseup(eventListenerMouseup);
+  adEventListenerMousemove(eventListenerMousemove);
   initBoard();
   initPieces();
   drawBoard();
@@ -34,33 +44,25 @@ Draughts.initialize = function() {
 };
 
 Draughts.draw = function() {
+
+  //console.log("draw");
   ctx.clearRect( 0, 0, canvas.width, canvas.height);
-  console.log("draw");
   drawBoard();
-  ctx.save();
+  //ctx.save();
 
   for (var i=0; i < pieces.length; i++) {
     drawPiece(pieces[i]);
   }
-  ctx.restore();
+  //ctx.restore();
 };
 
 Draughts.update = function() {
 
+  //console.log("update");
   for (var i=0; i < pieces.length; i++) {
     pieces[i].update();
   }
 };
-
-Draughts.initialize();
-
-var run = function(){
-  Draughts.update();
-  Draughts.draw();
-  console.log("It's working!!");
-  window.requestAnimationFrame(run, canvas);
-};
-window.requestAnimationFrame(run, canvas);
 
 // Game interaction
 function initCanvas() {
@@ -70,11 +72,89 @@ function initCanvas() {
   elements = [];
 };
 
+function eventListenerMousedown(piece, event) {
+  CLICK_EVENT = true;
+
+  var x = event.pageX;
+  var y = event.pageY;
+
+  selectedPiece = piece;
+
+  //Save click
+  selectedPiece.clickX = x - selectedPiece.x;
+  selectedPiece.clickY = y - selectedPiece.y;
+};
+
+function eventListenerMouseup(piece, event) {
+  CLICK_EVENT = false;
+
+  var x = event.pageX;
+  var y = event.pageY;
+};
+
+function eventListenerMousemove(piece, event) {
+
+  var x = event.pageX;
+  var y = event.pageY;
+
+  selectedPiece.moveX = x - selectedPiece.clickX;
+  selectedPiece.moveY = y - selectedPiece.clickY;
+};
+
+function addEventListenerMousedown(callback) {
+    // Add event listener for `click` events.
+  canvas.addEventListener('mousedown', function (event) {
+    var x = event.pageX;
+    var y = event.pageY;
+
+    // Collision detection between clicked offset and element.
+    pieces.forEach(function (piece) {
+      if (piece.clickWithinPiece(x, y)) {
+        callback(piece, event);
+      }
+    });
+  }, false);
+};
+
+function adEventListenerMousemove(callback) {
+  // Add event listener for `click` events.
+  canvas.addEventListener('mousemove', function (event) {
+
+    if (CLICK_EVENT) {
+      var x = event.pageX;
+      var y = event.pageY;
+
+      // Collision detection between clicked offset and element.
+      pieces.forEach(function (piece) {
+        if (piece === selectedPiece) {
+          callback(piece, event);
+        }
+      });
+    }
+  }, false);
+};
+
+function addEventListenerMouseup(callback) {
+  canvas.addEventListener('mouseup', function (event) {
+    var x = event.pageX;
+    var y = event.pageY;
+
+    if (CLICK_EVENT) {
+      // Collision detection between clicked offset and element.
+      pieces.forEach(function (piece) {
+        if (piece === selectedPiece) {
+          callback(piece, event);
+        }
+      });
+    }
+  }, false);
+};
+
 
 function initBoard() {
 
-  var fillBrown = "#7a5230";
-  var fillBeige = "#f5f5dc";
+  var brown = "#7a5230";
+  var beige = "#f5f5dc";
   var flipflop = true;
   var i, j;
 
@@ -83,7 +163,7 @@ function initBoard() {
       if (flipflop) {
         //Add brown block
         elements.push({
-          colour: fillBrown,
+          color: brown,
           width: 75,
           height: 75,
           top: i * 75,
@@ -93,7 +173,7 @@ function initBoard() {
       else {
         //Print beige
         elements.push({
-          colour: fillBeige,
+          color: beige,
           width: 75,
           height: 75,
           top: i * 75,
@@ -202,10 +282,10 @@ function initPieces() {
 };
 
 function drawBoard() {
-    // Render elements.
-    elements.forEach(function (element) {
-      ctx.fillStyle = element.colour;
-      ctx.fillRect(element.left, element.top, element.width, element.height);
+  // Render elements.
+  elements.forEach(function (element) {
+    ctx.fillStyle = element.color;
+    ctx.fillRect(element.left, element.top, element.width, element.height);
   });
 };
 
@@ -220,4 +300,14 @@ function drawPiece(piece) {
   ctx.fill();
   ctx.stroke();
   ctx.closePath();
-}
+};
+
+Draughts.initialize();
+
+var run = function(){
+  Draughts.update();
+  Draughts.draw();
+  //console.log("It's working");
+  window.requestAnimationFrame(run, canvas);
+};
+window.requestAnimationFrame(run, canvas);
