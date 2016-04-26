@@ -7,6 +7,7 @@ var pieces = [];
 var CLICK_EVENT = false;
 var selectedPiece;
 
+// An object constructor function
 var Piece = function(x, y, pieceColor) {
   this.x = x;
   this.y = y;
@@ -31,7 +32,7 @@ Piece.prototype.update = function() {
   //console.log("still updating");
 };
 
-
+//Adding a Method to Draughts
 Draughts.initialize = function() {
   initCanvas();
   addEventListenerMousedown(eventListenerMousedown);
@@ -44,7 +45,6 @@ Draughts.initialize = function() {
 };
 
 Draughts.draw = function() {
-
   //console.log("draw");
   ctx.clearRect( 0, 0, canvas.width, canvas.height);
   drawBoard();
@@ -57,7 +57,6 @@ Draughts.draw = function() {
 };
 
 Draughts.update = function() {
-
   //console.log("update");
   for (var i=0; i < pieces.length; i++) {
     pieces[i].update();
@@ -85,7 +84,7 @@ function eventListenerMousedown(piece, event) {
   selectedPiece.clickY = y - selectedPiece.y;
 
   //Click right coordinates on screen
-  v.moveX = x - selectedPiece.clickX;
+  selectedPiece.moveX = x - selectedPiece.clickX;
   selectedPiece.moveY = y - selectedPiece.clickY;
 };
 
@@ -94,6 +93,10 @@ function eventListenerMouseup(piece, event) {
 
   var x = event.pageX;
   var y = event.pageY;
+
+  // Puts the piece in a box of the board
+  selectedPiece.moveX = Math.floor((x) / 75) * 75 + 37;
+  selectedPiece.moveY = Math.floor((y) / 75) * 75 + 37;
 };
 
 function eventListenerMousemove(piece, event) {
@@ -111,7 +114,6 @@ function addEventListenerMousedown(callback) {
     var x = event.pageX;
     var y = event.pageY;
 
-    // Collision detection between clicked offset and element.
     pieces.forEach(function (piece) {
       if (piece.clickWithinPiece(x, y)) {
         callback(piece, event);
@@ -128,7 +130,6 @@ function adEventListenerMousemove(callback) {
       var x = event.pageX;
       var y = event.pageY;
 
-      // Collision detection between clicked offset and element.
       pieces.forEach(function (piece) {
         if (piece === selectedPiece) {
           callback(piece, event);
@@ -144,7 +145,7 @@ function addEventListenerMouseup(callback) {
     var y = event.pageY;
 
     if (CLICK_EVENT) {
-      // Collision detection between clicked offset and element.
+
       pieces.forEach(function (piece) {
         if (piece === selectedPiece) {
           callback(piece, event);
@@ -306,12 +307,13 @@ function drawPiece(piece) {
   ctx.closePath();
 };
 
+
 Draughts.initialize();
 
 var run = function(){
   Draughts.update();
   Draughts.draw();
-  console.log("It's working");
+  //console.log("It's working");
   window.requestAnimationFrame(run, canvas);
 };
 window.requestAnimationFrame(run, canvas);
