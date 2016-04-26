@@ -8,12 +8,13 @@ var CLICK_EVENT = false;
 var selectedPiece;
 
 // An object constructor function
-var Piece = function(x, y, pieceColor) {
+var Piece = function(x, y, pieceColor, isking) {
   this.x = x;
   this.y = y;
   this.width = 75;
   this.height = 75;
   this.color = pieceColor;
+  this.king = isking;
 
   this.moveX = x;
   this.moveY = y;
@@ -193,7 +194,8 @@ function initBoard() {
 
 function initPieces() {
   var white = "#DAA520";
-  var black = "#333333";
+  var black = "#151515";
+  var isKing = true;
 
   var whitePiece1 = new Piece(37, 487, white);
   pieces.push(whitePiece1);
@@ -236,7 +238,6 @@ function initPieces() {
   var whitePiece20 = new Piece(712, 712, white);
   pieces.push(whitePiece20);
 
-
   var blackPiece1 = new Piece(37, 37, black);
   pieces.push(blackPiece1);
   var blackPiece2 = new Piece(187, 37, black);
@@ -278,6 +279,24 @@ function initPieces() {
   var blackPiece20 = new Piece(712, 262, black);
   pieces.push(blackPiece20);
 
+  var whiteKingPiece = new Piece(787, 712, white, isKing);
+  pieces.push(whiteKingPiece);
+  var whiteKingPiece = new Piece(787, 712, white, isKing);
+  pieces.push(whiteKingPiece);
+  var whiteKingPiece = new Piece(787, 712, white, isKing);
+  pieces.push(whiteKingPiece);
+  var whiteKingPiece = new Piece(787, 712, white, isKing);
+  pieces.push(whiteKingPiece);
+
+  var blackKingPiece = new Piece(787, 37, black, isKing);
+  pieces.push(blackKingPiece);
+  var blackKingPiece = new Piece(787, 37, black, isKing);
+  pieces.push(blackKingPiece);
+  var blackKingPiece = new Piece(787, 37, black, isKing);
+  pieces.push(blackKingPiece);
+  var blackKingPiece = new Piece(787, 37, black, isKing);
+  pieces.push(blackKingPiece);
+
   // Draw the pieces
   pieces.forEach(function(piece) {
     drawPiece(piece);
@@ -292,6 +311,7 @@ function drawBoard() {
   ctx.strokeStyle = "#000000";
   ctx.moveTo(750, 750);
   ctx.lineTo(750, 0);
+  ctx.lineWidth = 2;
   ctx.stroke()
   //Render elements
   elements.forEach(function (element) {
@@ -301,16 +321,30 @@ function drawBoard() {
 };
 
 function drawPiece(piece) {
-  //These properties may go in the ctx.arc function
-  ctx.beginPath();
-  ctx.fillStyle = piece.color;
-  ctx.strokeStyle = '#696969';
-  ctx.lineWidth = 2;
-  //        x        y    rad sAng   eAng
-  ctx.arc(piece.x, piece.y, 33, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.stroke();
-  ctx.closePath();
+
+  if (piece.king) {
+    ctx.beginPath();
+    //These properties may go in the ctx.arc function
+    ctx.fillStyle = piece.color;
+    ctx.strokeStyle = '#fbf6e8';
+    ctx.lineWidth = 4;
+    //        x        y    rad sAng   eAng
+    ctx.arc(piece.x, piece.y, 33, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+  }
+  else {
+    ctx.beginPath();
+    ctx.fillStyle = piece.color;
+    ctx.strokeStyle = '#696969';
+    ctx.lineWidth = 2;
+    //        x        y    rad sAng   eAng
+    ctx.arc(piece.x, piece.y, 33, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+  }
 };
 
 
