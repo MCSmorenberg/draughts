@@ -65,9 +65,8 @@ Draughts.update = function() {
 
 // Game interaction
 function initCanvas() {
-  canvas = document.getElementById('board'),
-  ctx = canvas.getContext('2d'),
-  //Board boxes
+  canvas = document.getElementById('board');
+  ctx = canvas.getContext('2d');
   elements = [];
 };
 
@@ -161,7 +160,6 @@ function initBoard() {
   var brown = "#7a5230";
   var beige = "#f5f5dc";
   var flipflop = true;
-  var i, j;
 
   for (i = 0; i < 10; i++) {
     for (j = 0; j < 10; j++) {
@@ -287,7 +285,15 @@ function initPieces() {
 };
 
 function drawBoard() {
-  // Render elements.
+  //Strip right side of the board
+  ctx.fillStyle = "gray";
+  ctx.fillRect(750,0,75,750);
+  //Line between elements and strip
+  ctx.strokeStyle = "#000000";
+  ctx.moveTo(750, 750);
+  ctx.lineTo(750, 0);
+  ctx.stroke()
+  //Render elements
   elements.forEach(function (element) {
     ctx.fillStyle = element.color;
     ctx.fillRect(element.left, element.top, element.width, element.height);
