@@ -22,7 +22,7 @@ var Piece = function(x, y, pieceColor) {
 };
 
 Piece.prototype.clickWithinPiece = function(x, y) {
-  return (y > this.y - 25 && y < this.y + this.height - 25 && x > this.x + 25 && x < this.x + this.width + 25);
+  return (y > this.y - 27 && y < this.y + this.height - 27 && x > this.x - 27 && x < this.x + this.width - 27);
 };
 
 Piece.prototype.update = function() {
@@ -83,6 +83,10 @@ function eventListenerMousedown(piece, event) {
   //Save click
   selectedPiece.clickX = x - selectedPiece.x;
   selectedPiece.clickY = y - selectedPiece.y;
+
+  //Click right coordinates on screen
+  v.moveX = x - selectedPiece.clickX;
+  selectedPiece.moveY = y - selectedPiece.clickY;
 };
 
 function eventListenerMouseup(piece, event) {
@@ -307,7 +311,7 @@ Draughts.initialize();
 var run = function(){
   Draughts.update();
   Draughts.draw();
-  //console.log("It's working");
+  console.log("It's working");
   window.requestAnimationFrame(run, canvas);
 };
 window.requestAnimationFrame(run, canvas);
