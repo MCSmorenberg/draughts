@@ -6,15 +6,16 @@ var elements = [];
 var pieces = [];
 var CLICK_EVENT = false;
 var selectedPiece;
+//var isKing;
 
 // An object constructor function
-var Piece = function(x, y, pieceColor, isking) {
+var Piece = function(x, y, pieceColor) {
   this.x = x;
   this.y = y;
   this.width = 75;
   this.height = 75;
   this.color = pieceColor;
-  this.king = isking;
+  this.king;
 
   this.moveX = x;
   this.moveY = y;
@@ -30,6 +31,7 @@ Piece.prototype.clickWithinPiece = function(x, y) {
 Piece.prototype.update = function() {
   this.x = this.moveX;
   this.y = this.moveY;
+  this.king = this.isKing;
   //console.log("still updating");
 };
 
@@ -38,7 +40,8 @@ Draughts.initialize = function() {
   initCanvas();
   addEventListenerMousedown(eventListenerMousedown);
   addEventListenerMouseup(eventListenerMouseup);
-  adEventListenerMousemove(eventListenerMousemove);
+  addEventListenerMousemove(eventListenerMousemove);
+  addEventListenerOndblclick(eventListenerOndblclick);
   initBoard();
   initPieces();
   drawBoard();
@@ -108,6 +111,19 @@ function eventListenerMousemove(piece, event) {
   selectedPiece.moveY = y - selectedPiece.clickY;
 };
 
+function eventListenerOndblclick(piece, event) {
+  CLICK_EVENT = true;
+  console.log("dubble");
+  var x = event.pageX;
+  var y = event.pageY;
+
+  selectedPiece = piece;
+
+  selectedPiece.isKing = true;
+
+};
+
+
 function addEventListenerMousedown(callback) {
     // Add event listener for `click` events.
   canvas.addEventListener('mousedown', function (event) {
@@ -122,7 +138,7 @@ function addEventListenerMousedown(callback) {
   }, false);
 };
 
-function adEventListenerMousemove(callback) {
+function addEventListenerMousemove(callback) {
   // Add event listener for `click` events.
   canvas.addEventListener('mousemove', function (event) {
 
@@ -152,6 +168,20 @@ function addEventListenerMouseup(callback) {
         }
       });
     }
+  }, false);
+};
+
+function addEventListenerOndblclick(callback) {
+  canvas.addEventListener('dblclick', function (event) {
+    var x = event.pageX;
+    var y = event.pageY;
+
+      pieces.forEach(function (piece) {
+        if (piece === selectedPiece) {
+          callback(piece, event);
+        }
+      });
+
   }, false);
 };
 
@@ -195,7 +225,6 @@ function initBoard() {
 function initPieces() {
   var white = "#DAA520";
   var black = "#151515";
-  var isKing = true;
 
   var whitePiece1 = new Piece(37, 487, white);
   pieces.push(whitePiece1);
@@ -278,24 +307,6 @@ function initPieces() {
   pieces.push(blackPiece19);
   var blackPiece20 = new Piece(712, 262, black);
   pieces.push(blackPiece20);
-
-  var whiteKingPiece = new Piece(787, 712, white, isKing);
-  pieces.push(whiteKingPiece);
-  var whiteKingPiece = new Piece(787, 712, white, isKing);
-  pieces.push(whiteKingPiece);
-  var whiteKingPiece = new Piece(787, 712, white, isKing);
-  pieces.push(whiteKingPiece);
-  var whiteKingPiece = new Piece(787, 712, white, isKing);
-  pieces.push(whiteKingPiece);
-
-  var blackKingPiece = new Piece(787, 37, black, isKing);
-  pieces.push(blackKingPiece);
-  var blackKingPiece = new Piece(787, 37, black, isKing);
-  pieces.push(blackKingPiece);
-  var blackKingPiece = new Piece(787, 37, black, isKing);
-  pieces.push(blackKingPiece);
-  var blackKingPiece = new Piece(787, 37, black, isKing);
-  pieces.push(blackKingPiece);
 
   // Draw the pieces
   pieces.forEach(function(piece) {
