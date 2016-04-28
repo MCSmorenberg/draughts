@@ -6,7 +6,6 @@ var elements = [];
 var pieces = [];
 var CLICK_EVENT = false;
 var selectedPiece;
-//var isKing;
 
 // An object constructor function
 var Piece = function(x, y, pieceColor) {
@@ -112,14 +111,14 @@ function eventListenerMousemove(piece, event) {
 };
 
 function eventListenerOndblclick(piece, event) {
-  CLICK_EVENT = true;
-  console.log("dubble");
+  //CLICK_EVENT = true;
+  //console.log("dubble");
   var x = event.pageX;
   var y = event.pageY;
 
   selectedPiece = piece;
 
-  selectedPiece.isKing = true;
+  selectedPiece.isKing = selectedPiece.isKing ? false : true;
 
 };
 
