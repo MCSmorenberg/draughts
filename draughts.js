@@ -47,7 +47,7 @@ Draughts.initialize = function() {
 
 Draughts.draw = function() {
   //console.log("draw");
-  ctx.clearRect( 0, 0, canvas.width, canvas.height);
+  //ctx.clearRect( 0, 0, canvas.width, canvas.height);
   drawBoard();
   //ctx.save();
 
