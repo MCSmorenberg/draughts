@@ -13,6 +13,19 @@
       left: 0;
       right:0;
     }*/
+    #instructions {
+      display: inline-block;
+      position: absolute;
+      margin-top: 20px;
+      margin-right: 30px;
+      margin-left: 30px;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
     </style>
   </head>
 
@@ -20,6 +33,25 @@
 
     <canvas id="board" width="825" height="750" style="border:1px solid"></canvas>
 
+    <div id="instructions">
+      <h2 style="color:black;font:22px arial;">Draughts</h2>
+      <h3 style="color:black;font:18px arial;">Controls</h3>
+      <ul style="color:black;font:14px arial;">
+        <li>Move your piece by drag-and-drop it with your mouse</li>
+        <li>Double click on a piece to make it a king</li>
+      </ul>
+      <h3 style="color:black;font:18px arial;">Instructions</h3>
+      <ul style="color:black;font:14px arial;">
+        <li>A move consists of moving a piece one square diagonally to an adjacent unoccupied dark square</li>
+        <li>A piece making a non-capturing move (not involving a jump) may move only one square forward</li>
+        <li>Only one piece may be captured in a single jump; however, multiple jumps are allowed on a single turn</li>
+        <li>All capturing moves forward and backward are compulsory</li>
+        <li>When a piece is captured, it is removed from the board (dragged to the grey strip on the right)</li>
+        <li>kings may move and combine jumps multiple squares in any diagonal direction forward and backward</li>
+        <li>A player wins the game when the opponent cannot make a move</li>
+        <li>Have Fun!</li>
+      </ul>
+    </div>
     <script src="draughts.js"></script>
   </body>
 </html>
